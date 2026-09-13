@@ -1,0 +1,32 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Non-secret application settings.
+# Secrets (like GROQ_API_KEY) live in .env — NEVER put keys in this file.
+# Loaded by src/jd_matcher/config.py at startup.
+# ─────────────────────────────────────────────────────────────────────────────
+
+model:
+  name: "openai/gpt-oss-120b"
+  base_url: "https://api.groq.com/openai/v1"
+
+temperatures:
+  # Creativity dial per task. Low = consistent, High = varied.
+  scoring: 0.2        # Agent 1: strict, repeatable scoring
+  cover_letter: 0.7   # Agent 2: creative, human-sounding prose
+  repair: 0.0         # JSON self-repair: maximally deterministic
+
+pricing:
+  # Groq pricing per 1 million tokens (USD). Used for cost estimation only.
+  # Key MUST match model.name exactly so estimate_cost() can look it up.
+  # Source: Groq pricing (verified Aug 2026).
+  "openai/gpt-oss-120b":
+    input_per_million: 0.15
+    output_per_million: 0.60
+
+limits:
+  # Display truncation limits (characters).
+  audit_user_preview_chars: 1000  # how much of the user message to show in the audit log
+
+ui:
+  page_title: "JD Matcher"
+  page_icon: ":page_facing_up:"
+  layout: "wide"
